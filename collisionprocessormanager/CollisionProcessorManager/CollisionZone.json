@@ -1,0 +1,49 @@
+{
+	"CollisionZoneDecelerationRate":	{
+		"DecelerationRate1":	50,
+		"DecelerationRate2":	20,
+		"DecelerationRate3":	0
+	},
+	"CollisionZone0":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone1":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone2":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone3":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone4":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone5":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	},
+	"CollisionZone6":	{
+		"Length1":	6,
+		"Length2":	4,
+		"Length3":	3,
+		"Length4":	2
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"Rotor1":	{
+		"LidarSerial":	"os1-1",
+		"RotorSerial":	"os1-2",
+		"LidarOperationStart":	"2020-12-01 00:00",
+		"RotorOperationStart":	"2020-12-01 00:00"
+	},
+	"Rotor2":	{
+		"LidarSerial":	"os1-1",
+		"RotorSerial":	"os1-2",
+		"LidarOperationStart":	"2020-12-01 00:00",
+		"RotorOperationStart":	"2020-12-01 00:00"
+	}
+}

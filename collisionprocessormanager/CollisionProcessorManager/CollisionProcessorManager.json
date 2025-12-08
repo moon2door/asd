@@ -1,0 +1,16 @@
+{
+	"Alarm":	{
+		"Used":	0
+	},
+	"Gps Setting":	{
+		"Enable":	1,
+		"Time":	10
+	},
+	"Viewer Distance":	{
+		"Max(m)":	50
+	},
+	"PLC":	{
+		"bUsePlc":	0,
+		"bControlPlc":	0
+	}
+}

@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\CollisionProcessorManager">
+      <UniqueIdentifier>{bf2f0296-c595-4a8f-8b08-e45db4b46862}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CollisionProcessorManager\Model">
+      <UniqueIdentifier>{204ecba3-5d2b-4526-9336-51b77064a22e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\CollisionProcessorManager\ProcessFunction">
+      <UniqueIdentifier>{392b0a14-025d-4eb0-82f5-2856e6e73c1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{aec2d95e-60d8-4946-91c6-685519a05d07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\DBConnector">
+      <UniqueIdentifier>{994c688e-d845-4c0f-aa81-e6e88282edc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\3rd">
+      <UniqueIdentifier>{b3c580b2-a043-40e9-8170-60581b72e910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\3rd\Device">
+      <UniqueIdentifier>{a5ec970a-9463-4b60-b587-4ac88b6a431b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\3rd\Device\EncoderGXM7S">
+      <UniqueIdentifier>{491cdf89-e183-49ce-aab2-d23862e4e28a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\3rd\Device\GpsTdr2000">
+      <UniqueIdentifier>{63c5d526-98ae-4922-a5ae-e91e1a226e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Utility">
+      <UniqueIdentifier>{e736880d-2417-4203-8a10-c96ce03b0024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Config">
+      <UniqueIdentifier>{73cbc1e9-11a0-450e-84f1-3da36e31e4f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Utility\ConvertCoordinates">
+      <UniqueIdentifier>{ffbbe0d6-b44a-4355-ba5f-8ffc7337d9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Base">
+      <UniqueIdentifier>{7e269375-1549-4e03-a3a9-c91a460b622a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CollisionProcessorManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelSystemStatus.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelCooperationMode.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelCollisionZone.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelDBMSConnector.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelDistanceSocket.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionProcessorManagerDlg.h">
+      <Filter>소스 파일\CollisionProcessorManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelOtherCranes.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelCraneMiniInfo.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\3rd\Device\GpsTdr2000\InterfaceGpsTdr2000.h">
+      <Filter>Core\3rd\Device\GpsTdr2000</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\3rd\Device\EncoderGXM7S\EncoderGXM7S.h">
+      <Filter>Core\3rd\Device\EncoderGXM7S</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Config\CraneGps.h">
+      <Filter>Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Config\CraneInfo.h">
+      <Filter>Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Config\DistanceParameter.h">
+      <Filter>Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Config\InitialAttitude.h">
+      <Filter>Core\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Object\DBConnector\DBConnector.h">
+      <Filter>Core\DBConnector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Compressor.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\filter.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Transform.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\UTM.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\mathematics.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\ConvertCoordinates\polarst.h">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\ConvertCoordinates\tranmerc.h">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\ConvertCoordinates\ups.h">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\ConvertCoordinates\utm.h">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\ConvertCoordinates\mgrs.h">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\Utility\Geometric\Geometric.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelRotorParameter.h">
+      <Filter>소스 파일\CollisionProcessorManager\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\core\3rd\utility\Config.h">
+      <Filter>Core\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CollisionProcessorManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="OnProcessDBMS.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveDataCollisionProcessor.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveDataDistanceProcessor.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveDataMonitoring.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveDataPLC.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveDataSensorProcessor.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveUpdateProcessor.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionProcessorManagerDlg.cpp">
+      <Filter>소스 파일\CollisionProcessorManager</Filter>
+    </ClCompile>
+    <ClCompile Include="OnTimerReportSystemStatus.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveAHRS.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="OnReceiveGPS.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessModelDistance.cpp">
+      <Filter>소스 파일\CollisionProcessorManager\ProcessFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\3rd\Device\GpsTdr2000\InterfaceGpsTdr2000.cpp">
+      <Filter>Core\3rd\Device\GpsTdr2000</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\3rd\Device\EncoderGXM7S\EncoderGXM7S.cpp">
+      <Filter>Core\3rd\Device\EncoderGXM7S</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Config\CraneInfo.cpp">
+      <Filter>Core\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Config\InitialAttitude.cpp">
+      <Filter>Core\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Config\CraneGps.cpp">
+      <Filter>Core\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Compressor.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Filter.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Transform.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\UTM.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\mathematics.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\ConvertCoordinates\polarst.c">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\ConvertCoordinates\tranmerc.c">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\ConvertCoordinates\ups.c">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\ConvertCoordinates\utm2.c">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\ConvertCoordinates\mgrs.c">
+      <Filter>Core\Utility\ConvertCoordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\Utility\Geometric\Geometric.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\core\3rd\utility\Config.cpp">
+      <Filter>Core\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CollisionProcessorManager.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\CollisionProcessorManager.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="ClassDiagram.cd" />
+    <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\CollisionProcessorManager.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
