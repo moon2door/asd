@@ -3,10 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 
 public class CameraHandler : MonoBehaviour
 {
+    //pjh
+    [Serializable]
+    struct CameraOffset
+    {
+        public string pierName;
+        public Vector2[] angles;
+        public float[] distances;
+    }
+    [SerializeField]
+    CameraOffset[] cameraOffsets;
+    //
     public CraneInfo craneInfo;
     public SelectionManager selectionManager;
     public Transform target;
@@ -29,35 +41,7 @@ public class CameraHandler : MonoBehaviour
     void Start()
     {
         string currentStringPier = CsCore.Configuration.ReadConfigIni("Initial Pier", "Value");
-
-        switch (currentStringPier)
-        {
-            case "J":
-                currentPier = 1;
-                break;
-
-            case "K":
-                currentPier = 2;
-                break;
-
-            case "HAN":
-                currentPier = 3;
-                break;
-            case "6":
-                currentPier = 4;
-                break;
-            case "G2":
-                currentPier = 5;
-                break;
-            case "G3":
-                currentPier = 6;
-                break;
-            case "G4":
-                currentPier = 7;
-                break;
-            default:
-                break;
-        }
+        currentPier = PierUtility.PierNum(currentStringPier);
        // pierSelected = selectionManager.currentPier;
        pierSelected = currentPier;
         craneSelected = selectionManager.currentCrane;
@@ -109,124 +93,24 @@ public class CameraHandler : MonoBehaviour
         // 카메라 리셋
         if (bUpdateCrane)
         {
+            if(pierSelected > cameraOffsets.Length) Debug.LogError("cannot find cameraOffset "+ pierSelected);
             if (craneInfo.Contains(pierSelected, craneSelected))
             {
-                if (pierSelected == 1) // J안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 150;
-                    cameraAngle = new Vector2(-120, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 2) // K안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 100;
-                    cameraAngle = new Vector2(86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 3) // 신한내
-                {
-                    cameraOffset = new Vector2();
-                    distance = 150;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 4) // 6안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 180;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 5) // G2 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 100;
-                    cameraAngle = new Vector2(-120, 50);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 6) // G3 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 100;
-                    cameraAngle = new Vector2(-120, 50);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 7) // G4 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 100;
-                    cameraAngle = new Vector2(-120, 50);
-                    bUpdateCrane = false;
-                }
-                else // J 안벽 외
-                {
-                    cameraOffset = new Vector2();
-                    distance = 500;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
-
+                //pjh
+                cameraOffset = new Vector2();
+                distance = cameraOffsets[pierSelected-1].distances[0];
+                cameraAngle = cameraOffsets[pierSelected-1].angles[0];
+                bUpdateCrane = false;
+                //
             }
             else
             {
-                if (pierSelected == 1) // J안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 500;
-                    cameraAngle = new Vector2(-120, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 2) // K안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 500;
-                    cameraAngle = new Vector2(86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 3) // 신한내
-                {
-                    cameraOffset = new Vector2();
-                    distance = 500;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 4) // 6안벽
-                {
-                    cameraOffset = new Vector2();
-                    distance = 180;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 5) // G2 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 300;
-                    cameraAngle = new Vector2(-10, 20);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 6) // G3 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 450;
-                    cameraAngle = new Vector2(-10, 20);
-                    bUpdateCrane = false;
-                }
-                else if (pierSelected == 7) // G4 도크
-                {
-                    cameraOffset = new Vector2();
-                    distance = 450;
-                    cameraAngle = new Vector2(-10, 20);
-                    bUpdateCrane = false;
-                }
-                else // J 안벽 외
-                {
-                    cameraOffset = new Vector2();
-                    distance = 500;
-                    cameraAngle = new Vector2(-86, 32);
-                    bUpdateCrane = false;
-                }
+                //pjh
+                cameraOffset = new Vector2();
+                distance = cameraOffsets[pierSelected-1].distances.Length > 1 ? cameraOffsets[pierSelected-1].distances[1] : cameraOffsets[pierSelected-1].distances[0]; 
+                cameraAngle = cameraOffsets[pierSelected-1].angles.Length > 1 ? cameraOffsets[pierSelected-1].angles[1] : cameraOffsets[pierSelected-1].angles[0];
+                bUpdateCrane = false;
+                //
             }
         }
 
@@ -252,6 +136,7 @@ public class CameraHandler : MonoBehaviour
                 }
             }
         }
+
         target = tf;
     }
 

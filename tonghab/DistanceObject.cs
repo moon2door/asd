@@ -22,14 +22,16 @@ public class DistanceObject : MonoBehaviour
     private GameObject panelLevel1;
     private Transform transformDistanceData;
 
-
     public void UpdateDistance(DistanceData d)
     {
-        position1 = d.p1;
-        position2 = d.p2;
-        distance = d.distance;
-        level = d.level;
-        bUpdate = true;
+        if (d != null)
+        {
+            position1 = d.p1;
+            position2 = d.p2;
+            distance = d.distance;
+            level = d.level;
+            bUpdate = true;
+        }
     }
 
     // Start is called before the first frame update
@@ -59,6 +61,7 @@ public class DistanceObject : MonoBehaviour
             lineRenderer.SetPosition(1, position2);
 
             // Update text
+            panelObject.SetActive(true);
             Text txt = textObject.GetComponent<Text>();
             txt.text = "" + distance.ToString("F1") + "m";
             

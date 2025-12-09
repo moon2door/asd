@@ -616,6 +616,8 @@ namespace StructDefines
             Array.Copy(_hour, 0, byteArray, pos, _hour.Length); pos += _hour.Length;
             Array.Copy(_min, 0, byteArray, pos, _min.Length); pos += _min.Length;
             Array.Copy(_sec, 0, byteArray, pos, _sec.Length); pos += _sec.Length;
+
+            Debug.Log(string.Format("Request Log Data {0}-{1}-{2} {3}:{4} {5}", playDay.Year, playDay.Month, playDay.Day, playDay.Hour, playDay.Minute, playDay.Second));
             return pos;
         }
     }
@@ -653,9 +655,14 @@ namespace StructDefines
                 int curMin = BitConverter.ToInt32(byteArray, pos); pos += 4;
                 int curSec = BitConverter.ToInt32(byteArray, pos); pos += 4;
 
-                Debug.Log(string.Format("startTime {0}-{1}-{2} {3}:{4} {5}", startYear, startMonth, startDay, startHour, startMin, startSec));
+                Debug.Log(string.Format("Receive Log Data\nstartTime {0}-{1}-{2} {3}:{4} {5}", startYear, startMonth, startDay, startHour, startMin, startSec));
                 Debug.Log(string.Format("endTime {0}-{1}-{2} {3}:{4} {5}", endYear, endMonth, endDay, endHour, endMin, endSec));
                 Debug.Log(string.Format("curTime {0}-{1}-{2} {3}:{4} {5}", curYear, curMonth, curDay, curHour, curMin, curSec));
+                if(startYear > 3000 || startYear < 2000)
+                {
+                    Debug.LogError("StartYear Error : "+ startYear);
+                    return ret;
+                }
                 startTime = new DateTime(startYear, startMonth, startDay, startHour, startMin, startSec);
                 endTime = new DateTime(endYear, endMonth, endDay, endHour, endMin, endSec);
                 curTime = new DateTime(curYear, curMonth, curDay, curHour, curMin, curSec);

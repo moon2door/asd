@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class DistanceManager : MonoBehaviour
 {
-    public CraneInfo craneInfo;
+    private CraneInfo craneInfo;
 
     public GameObject prefab;
 
@@ -12,7 +11,7 @@ public class DistanceManager : MonoBehaviour
 
     private Dictionary<int, DistanceData[]> distanceData = new Dictionary<int, DistanceData[]>();
 
-    public Dictionary<int, GameObject> distanceObjects = new Dictionary<int, GameObject>();
+    public Dictionary<int, DistanceObject> distanceObjects = new Dictionary<int, DistanceObject>();
 
     public Dictionary<int, bool> bUpdate = new Dictionary<int, bool>();
 
@@ -21,6 +20,7 @@ public class DistanceManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        craneInfo = GetComponent<CraneInfo>();
         manager = new GameObject("distanceData");
 
         foreach (int key in craneInfo.keys)
@@ -37,9 +37,17 @@ public class DistanceManager : MonoBehaviour
             gameObject.SetActive(false);
 
             distanceData.Add(key, new DistanceData[0]);
-            distanceObjects.Add(key, gameObject);
+            distanceObjects.Add(key, gameObject.GetComponent<DistanceObject>());
             bUpdate.Add(key, false);
-            groups.Add(key, group);
+            //pjh
+            //if(craneInfo.dictPier[key]<8)
+            //    groups.Add(key, group);
+            //else
+            //    {
+                    groups.Add(key, craneInfo.dictCraneGameObject[key].GetComponent<CraneParts>().CraneBody.GetChild(0).gameObject);
+             //   }
+            //~pjh
+
         }
     }
 
@@ -51,16 +59,25 @@ public class DistanceManager : MonoBehaviour
             {
                 if (distanceData[key].Length > 0)
                 {
-                    distanceObjects[key].SetActive(true);
-                    DistanceObject distanceObject = distanceObjects[key].GetComponent<DistanceObject>();
+                    DistanceObject distanceObject = distanceObjects[key];
+                    distanceObject.gameObject.SetActive(true);
                     distanceObject.UpdateDistance(distanceData[key][0]);
                     distanceObject.transform.SetParent(groups[key].transform);
-                    distanceObject.transform.position = craneInfo.dictCraneGameObject[key].transform.position;
-                    distanceObject.transform.rotation = craneInfo.dictCraneGameObject[key].transform.rotation;
+                    //pjh
+                    // if(craneInfo.dictPier[key]<8)
+                    // {
+                    //     distanceObject.transform.position = craneInfo.dictCraneGameObject[key].transform.position;
+                    //     distanceObject.transform.rotation = craneInfo.dictCraneGameObject[key].transform.rotation;
+                    // }else
+                    // {
+                        distanceObject.transform.localPosition = Vector3.zero;
+                        distanceObject.transform.localRotation = Quaternion.identity;
+                    //}
+                    //~pjh
                 }
                 else
                 {
-                    distanceObjects[key].SetActive(false);
+                    distanceObjects[key].gameObject.SetActive(false);
                 }
 
                 bUpdate[key] = false;

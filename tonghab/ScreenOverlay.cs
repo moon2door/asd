@@ -25,6 +25,10 @@ public class ScreenOverlay : MonoBehaviour
             {
                 rectTransform.position = position;
             }
+            else
+            {
+                rectTransform.position = Vector3.one * 65536;
+            }
         }
         else
         {

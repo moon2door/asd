@@ -27,7 +27,7 @@ public struct CraneColorMode
 
 public class CraneColorControl : MonoBehaviour
 {
-    public CraneInfo craneInfo;
+    CraneInfo craneInfo;
     public Dictionary<CraneKey, MeshRenderer> meshes;
     public MeshRenderer craneMesh;
     public Color colorDisabled = new Color(0.1f, 0.1f, 0.1f, 1.0f);
@@ -44,6 +44,7 @@ public class CraneColorControl : MonoBehaviour
 
     void Start()
     {
+        craneInfo = GetComponent<CraneInfo>();
         //originalColor = craneMesh.material.color;
 
         foreach(int key in craneInfo.keys)

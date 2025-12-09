@@ -299,8 +299,14 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
                     Text textCrane = gameObjectCrane.GetComponent<Text>();
                     Text textStatus = gameObjectStatus.GetComponent<Text>();
                     Text textDistance = gameObjectDistance.GetComponent<Text>();
+                    textCrane.text = string.Empty;
+                    textStatus.text = string.Empty;
+                    textDistance.text = string.Empty;
 
-                    int key = craneInfo.GetCraneKeycode(currentPier, i - 1);
+                    int index = selectionManager.dropdownCraneNum.Count > i-1 ? selectionManager.dropdownCraneNum[i-1] : -1;
+                    if (index < 0)
+                        continue;
+                    int key = craneInfo.GetCraneKeycode(currentPier, index);
                     if (craneInfo.dictCraneName.ContainsKey(key) &&
                         strStatus.ContainsKey(key) &&
                         strDistance.ContainsKey(key) &&
@@ -328,9 +334,12 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
                 {
                     GameObject gameObjectComment = menu.transform.GetChild(i).Find("Comment").gameObject;
                     Text textComment = gameObjectComment.GetComponent<Text>();
-
+                    textComment.text = string.Empty;
+                    int index = selectionManager.dropdownCraneNum.Count > i - 1 ? selectionManager.dropdownCraneNum[i - 1] : -1;
+                    if (index < 0)
+                        continue;
                     //Debug.Log("#####################" + craneInfo.dictCraneName[key] + " " + strComment[key]);
-                    int key = craneInfo.GetCraneKeycode(currentPier, i - 1);
+                    int key = craneInfo.GetCraneKeycode(currentPier, index);
                     if (strComment.ContainsKey(key))
                     {
                         //Debug.Log(string.Format("$$$$$$ {0} -- {1} => {2}", currentPier, i - 1, strComment[key]));
@@ -522,6 +531,14 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
 
         panelLoading.SetLoading(false);
     }
+
+    //pjh
+    public void SetLoadingPanel(bool active)
+    {
+        panelLoading.SetLoading(active);
+        panelLoading.gameObject.SetActive(active);
+    }
+    //~pjh
     
     public void OnButtonOpenLog()
     {
@@ -537,8 +554,8 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
             message.playDay = logtimeCur;
             socketObject.SendRequestLogPlay(message);
 
-            panelLoading.gameObject.SetActive(true);
-            panelLoading.SetLoading(true);
+            //panelLoading.gameObject.SetActive(true);
+            SetLoadingPanel(true);
         }
     }
     public void OnButtonStopLog()
@@ -551,8 +568,8 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
             message.playDay = DateTime.Today;
             socketObject.SendRequestLogPlay(message);
         }
-        panelLoading.gameObject.SetActive(false);
-        panelLoading.SetLoading(false);
+        //panelLoading.gameObject.SetActive(false);
+        SetLoadingPanel(false);
     }
     public void OnButtonLogPlayMode()
     {
@@ -592,8 +609,8 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
             message.playDay = logtimeCur;
             socketObject.SendRequestLogPlay(message);
 
-            panelLoading.gameObject.SetActive(true);
-            panelLoading.SetLoading(true);
+            //panelLoading.gameObject.SetActive(true);
+            SetLoadingPanel(true);
         }
     }
     public void OnPointerUp(PointerEventData eventData)
@@ -611,8 +628,8 @@ public class MenuController : MonoBehaviour, IPointerUpHandler
             message.playDay = selectedTime;
             socketObject.SendRequestLogPlay(message);
 
-            panelLoading.gameObject.SetActive(true);
-            panelLoading.SetLoading(true);
+            //panelLoading.gameObject.SetActive(true);
+            SetLoadingPanel(true);
         }
         else
         {

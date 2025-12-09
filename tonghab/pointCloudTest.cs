@@ -5,16 +5,20 @@ using System.IO;
 
 public class PointManager
 {
-    public PointManager(int pier, int crane, string name)
+    public PointManager(CraneParts parts)//pjh
     {
-        group =  GameObject.Find("pointCloudGroups");
-        pointGroup = new GameObject(name);
-        pointPoolGroup = new GameObject(name + "pool");
-        pointGroup.transform.SetParent(group.transform);
-        pointPoolGroup.transform.SetParent(group.transform);
+        this.pier = parts.pierCode;
+        this.crane = parts.craneCode;
 
-        this.pier = pier;
-        this.crane = crane;
+        group =  GameObject.Find("pointCloudGroups");
+        pointPoolGroup = new GameObject(parts.craneName + "pool");
+        //pjh
+        pointGroup = parts.pointCloudTransform;
+        pointPoolGroup.transform.SetParent(parts.gameObject.transform);
+        pointPoolGroup.transform.localPosition = Vector3.zero;
+        pointPoolGroup.transform.localRotation = Quaternion.identity;
+        //~pjh
+        
         bUpdate = false;
     }
 
@@ -64,34 +68,19 @@ public class pointCloudTest : MonoBehaviour
     private string textPointSize = "";
     private float pointSize = 0.3f;
 
+
     void Start()
     {
-        manager.Add(new PointManager(2, 0, "JIB1"));
-        manager.Add(new PointManager(2, 1, "JIB2"));
-        manager.Add(new PointManager(2, 2, "JIB3"));
-        manager.Add(new PointManager(2, 3, "TTC23"));
-        manager.Add(new PointManager(2, 4, "LLC18"));
-        manager.Add(new PointManager(2, 5, "LLC19"));
-        manager.Add(new PointManager(3, 0, "GC1"));
-        manager.Add(new PointManager(3, 1, "GC2"));
-        manager.Add(new PointManager(3, 2, "TC1"));
-        manager.Add(new PointManager(3, 3, "TC2"));
-        manager.Add(new PointManager(3, 4, "TC3"));
-        manager.Add(new PointManager(3, 5, "TTC4"));
-        manager.Add(new PointManager(3, 6, "TC5"));
-        manager.Add(new PointManager(3, 7, "TC6"));
-        manager.Add(new PointManager(4, 0, "LLC7"));
-        manager.Add(new PointManager(4, 1, "LLC23"));
-        manager.Add(new PointManager(1, 0, "LLC24"));
-        manager.Add(new PointManager(1, 1, "LLC11"));
-        manager.Add(new PointManager(1, 2, "LLC8"));
-        manager.Add(new PointManager(1, 3, "LLC9"));
-        manager.Add(new PointManager(5, 0, "LLC12"));
-        manager.Add(new PointManager(5, 1, "LLC13"));
-        manager.Add(new PointManager(6, 0, "LLC19"));
-        manager.Add(new PointManager(6, 1, "LLC20"));
-        manager.Add(new PointManager(7, 0, "LLC25"));
-        manager.Add(new PointManager(7, 1, "LLC26"));
+        //pjh
+        Application.targetFrameRate = 20;//int.Parse(CsCore.Configuration.ReadConfigIni("TargetFrameRate" , "Frame", "30"));
+
+
+        var  craneInfo = GetComponent<CraneInfo>();
+        for(int i =0; i < craneInfo.keys.Count; i++)
+        {
+            manager.Add(new PointManager(craneInfo.craneGameObject[i].GetComponent<CraneParts>()));
+        }
+        //~pjh
 
         for (int i = 0; i < manager.Count; i++)
         {
@@ -111,6 +100,7 @@ public class pointCloudTest : MonoBehaviour
                 pointManager.pointGroupsPool.Enqueue(pointFrame);
             }
         }
+        StartCoroutine(UpdateCoroutine());
     }
     
     public void UpdatePoints(int pier, int crane, uint _numPoints, Vector3[] _vertices, Color[] _colors, int[] _indices)
@@ -124,54 +114,134 @@ public class pointCloudTest : MonoBehaviour
             }
         }
     }
-
-    private float updateTime = 0;
-
-    void Update()
+    readonly WaitForSecondsRealtime wait = new WaitForSecondsRealtime(1);
+    //pjh
+    IEnumerator UpdateCoroutine()
     {
-        if(updateTime + 5 < UnityEngine.Time.time)
+        while(true)
         {
             textPointSize = CsCore.Configuration.ReadConfigIni("PointSize", "Value");
             float.TryParse(textPointSize, out pointSize);
-            updateTime = UnityEngine.Time.time;
-        }
 
-        for (int i = 0; i < manager.Count; i++)
-        {
-            PointManager pointManager = manager[i];
-            if (pointManager.IsUpdated())
+            for (int i = 0; i < manager.Count; i++)
             {
-                pointManager.ResetUpdatd();
-
-                try
+                PointManager pointManager = manager[i];
+                if (pointManager.IsUpdated())
                 {
-                    GameObject pointFrame = pointManager.pointGroupsPool.Dequeue();
+                    //pjh
+                    var points = pointManager.points;
+                    var colors = pointManager.colors;
+                    var indices = pointManager.indices;
+                    //~pjh
+                    pointManager.ResetUpdatd();
 
-                    matVertex.SetFloat("_PointSize", pointSize);
-                    pointFrame.SetActive(true);
-
-                    Mesh mesh = pointFrame.GetComponent<MeshFilter>().mesh;
-                    mesh.Clear();
-                    mesh.vertices = pointManager.points;
-                    mesh.colors = pointManager.colors;
-                    mesh.SetIndices(pointManager.indices, MeshTopology.Points, 0);
-                    pointFrame.GetComponent<MeshFilter>().mesh = mesh;
-                    pointFrame.transform.SetParent(pointManager.pointGroup.transform);
-                    pointManager.pointGroups.Enqueue(pointFrame);
-
-                    while (pointManager.pointGroups.Count > queueSize)
+                    try
                     {
-                        GameObject gameObject = pointManager.pointGroups.Dequeue();
-                        gameObject.transform.SetParent(pointManager.pointPoolGroup.transform);
-                        gameObject.SetActive(false);
-                        pointManager.pointGroupsPool.Enqueue(pointFrame);
+                        if(points.Length != colors.Length)continue;//pjh
+
+                        GameObject pointFrame = pointManager.pointGroupsPool.Dequeue();
+
+                        matVertex.SetFloat("_PointSize", pointSize);
+                        pointFrame.SetActive(true);
+
+                        Mesh mesh = pointFrame.GetComponent<MeshFilter>().mesh;
+                        mesh.Clear();
+                        mesh.vertices = points;//pjh
+                        mesh.colors = colors;//pjh
+                        mesh.SetIndices(indices, MeshTopology.Points, 0);//pjh
+                        pointFrame.GetComponent<MeshFilter>().mesh = mesh;
+                        pointFrame.transform.SetParent(pointManager.pointGroup.transform);
+                        //pjh
+                        pointFrame.transform.localPosition = Vector3.zero;
+                        pointFrame.transform.localRotation = Quaternion.identity;
+                        pointFrame.transform.localScale = Vector3.one;
+                        //
+
+                        // CES
+                        if (pointManager.group != null )
+                            pointFrame.transform.SetParent(pointManager.group.transform);
+
+                        pointManager.pointGroups.Enqueue(pointFrame);
+
+                        while (pointManager.pointGroups.Count > queueSize)
+                        {
+                            GameObject gameObject = pointManager.pointGroups.Dequeue();
+                            gameObject.transform.SetParent(pointManager.pointPoolGroup.transform);
+                            gameObject.SetActive(false);
+
+                            // CES
+                            gameObject.transform.localPosition = Vector3.zero;
+                            gameObject.transform.localRotation = Quaternion.identity;
+                            gameObject.transform.localScale = Vector3.one;
+
+                            pointManager.pointGroupsPool.Enqueue(pointFrame);
+                        }
+                    }
+                    catch(System.InvalidOperationException e)
+                    {
+                        Debug.Log(e.ToString());
                     }
                 }
-                catch(System.InvalidOperationException e)
-                {
-                    Debug.Log(e.ToString());
-                }
             }
-        }
+            yield return wait;
+        }   
     }
+
+    // private float updateTime = 0;
+    // void Update()
+    // {
+    //     if(updateTime + 5 < UnityEngine.Time.time)
+    //     {
+    //         textPointSize = CsCore.Configuration.ReadConfigIni("PointSize", "Value");
+    //         float.TryParse(textPointSize, out pointSize);
+    //         updateTime = UnityEngine.Time.time;
+    //     }
+
+    //     for (int i = 0; i < manager.Count; i++)
+    //     {
+    //         PointManager pointManager = manager[i];
+    //         if (pointManager.IsUpdated())
+    //         {
+    //             pointManager.ResetUpdatd();
+
+    //             try
+    //             {
+    //                 if(pointManager.points.Length != pointManager.colors.Length)continue;//pjh
+                    
+    //                 GameObject pointFrame = pointManager.pointGroupsPool.Dequeue();
+
+    //                 matVertex.SetFloat("_PointSize", pointSize);
+    //                 pointFrame.SetActive(true);
+
+    //                 Mesh mesh = pointFrame.GetComponent<MeshFilter>().mesh;
+    //                 mesh.Clear();
+    //                 mesh.vertices = pointManager.points;
+    //                 if(pointManager.colors.Length != mesh.vertices.Length) continue; //pjh
+    //                 mesh.colors = pointManager.colors;
+    //                 mesh.SetIndices(pointManager.indices, MeshTopology.Points, 0);
+    //                 pointFrame.GetComponent<MeshFilter>().mesh = mesh;
+    //                 pointFrame.transform.SetParent(pointManager.pointGroup.transform);
+    //                 //pjh
+    //                 pointFrame.transform.localPosition = Vector3.zero;
+    //                 pointFrame.transform.localRotation = Quaternion.identity;
+    //                 pointFrame.transform.localScale = Vector3.one;
+    //                 //
+    //                 pointManager.pointGroups.Enqueue(pointFrame);
+
+    //                 while (pointManager.pointGroups.Count > queueSize)
+    //                 {
+    //                     GameObject gameObject = pointManager.pointGroups.Dequeue();
+    //                     gameObject.transform.SetParent(pointManager.pointPoolGroup.transform);
+    //                     gameObject.SetActive(false);
+    //                     pointManager.pointGroupsPool.Enqueue(pointFrame);
+    //                 }
+    //             }
+    //             catch(System.InvalidOperationException e)
+    //             {
+    //                 Debug.Log(e.ToString());
+    //             }
+    //         }
+    //     }
+    // }
+    //~pjh
 }

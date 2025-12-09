@@ -5,6 +5,7 @@ using UnityEngine;
 public class CraneWireControl : MonoBehaviour
 {
     public Material material;
+    [Header("Wire Positions")]
     public Transform position1;
     public Transform position2;
     public int numWire;

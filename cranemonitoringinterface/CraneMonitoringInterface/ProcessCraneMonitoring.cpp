@@ -37,6 +37,7 @@ namespace SHI
 
 	void CProcessCraneMonitoring::OnAlarmUse(const std::string& ip, uint16_t port, SHI::Data::StAlarmUse* pAlarmUse)
 	{
+		/* // [수정] 유니티가 보낸 원본 IP를 유지하기 위해 아래 로직을 주석 처리함
 		//pjh sprintf_s(m_address, sizeof(m_address), "%d.%d.%d.%d", pAlarmUse->address[0], pAlarmUse->address[1], pAlarmUse->address[2], pAlarmUse->address[3]);
 		//pjh
 		int pos = 0;
@@ -64,6 +65,9 @@ namespace SHI
 			pAlarmUse->address[i] = address[i];
 		}
 		//~pjh
+		*/
+
+		// 로그에는 이제 127.0.0.1이 아니라 유니티가 보낸 IP가 찍힐 것임
 		printf("OnAlarmUse ip : %d.%d.%d.%d", pAlarmUse->address[0], pAlarmUse->address[1], pAlarmUse->address[2], pAlarmUse->address[3]);
 		CProcessCollisionManager::Instance()->SendAlarmUse(pAlarmUse);
 	}
