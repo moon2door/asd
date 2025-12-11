@@ -1,0 +1,12 @@
+../Core/Src/main.c:72:6:TIM1_IRQHandler	8	static
+../Core/Src/main.c:80:6:HAL_TIM_IC_CaptureCallback	16	static
+../Core/Src/main.c:99:5:calculate_relative_encoder_value	16	static
+../Core/Src/main.c:112:6:init_time	4	static
+../Core/Src/main.c:117:10:get_time_ms	40	static
+../Core/Src/main.c:167:6:HAL_TIM_PeriodElapsedCallback	32	static
+../Core/Src/main.c:242:5:is_number	24	static
+../Core/Src/main.c:251:6:VIRT_UART0_RxCpltCallback	16	static
+../Core/Src/main.c:308:5:main	552	static
+../Core/Src/main.c:413:6:SystemClock_Config	336	static
+../Core/Src/main.c:498:6:PeriphCommonClock_Config	352	static
+../Core/Src/main.c:520:6:Error_Handler	4	static,ignoring_inline_asm
