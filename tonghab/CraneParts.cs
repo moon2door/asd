@@ -6,6 +6,9 @@ using System.Text;
 //pjh
 public class CraneParts : MonoBehaviour
 {
+    // [추가] 타워의 초기 회전값을 저장할 변수 선언
+    Vector3 initCraneTowerEulerAngles;
+
     #region Variable
     public enum CraneType
     {
@@ -94,7 +97,7 @@ public class CraneParts : MonoBehaviour
             exceptionPosList.Add(pos);
             isException = true;
         }
-        if (exceptionJIB.Count == 2)
+        if (exceptionJIB.Count == 5)
         {
             (Vector3, Vector3, float) pos = (exceptionJIB[0].localPosition, exceptionJIB[1].localPosition, 5f);
             exceptionPosList.Add(pos);
@@ -105,7 +108,11 @@ public class CraneParts : MonoBehaviour
     private void Start()
     {
         if(useReverseRotateCrane) pointCloudTransform.transform.parent = craneTower.transform;
-        initCraneBodyEulerAngles = craneBody.transform.localEulerAngles;
+        initCraneBodyEulerAngles = craneBody != null ? craneBody.transform.localEulerAngles : Vector3.zero;
+
+        // [추가] 타워 초기 회전값 저장
+        initCraneTowerEulerAngles = craneTower.localEulerAngles;
+
         defaultPointCloudRotation = pointCloudTransform.transform.localEulerAngles;
         if(refPosition==null)return;
         startUnity = ReferenceGPSToUnity(refPosition.startPoint);
@@ -188,16 +195,23 @@ public class CraneParts : MonoBehaviour
         }
         //SetPointCloudTransformFromOffset();
     }
-    #endif
-    
+#endif
+
     void SetPointCloudTransformFromOffset()
     {
-        pointCloudTransform.transform.localPosition =  pointCloudPositionOffset;
+        pointCloudTransform.transform.localPosition = pointCloudPositionOffset;
 
         pointCloudTransform.transform.localEulerAngles = defaultPointCloudRotation;
-        pointCloudTransform.transform.Rotate(0f, (useReverseRotator ? (initCraneBodyEulerAngles.z - craneBody.localEulerAngles.z) * float.Parse(CsCore.Configuration.ReadConfigIni("PointCloudRotateAmount","Amount", "1")) : 0f) + pointCloudRotationOffset, 0f, Space.Self);
-        //pointCloudTransform.transform.Rotate(0f, pointCloudRotationOffset, 0f, Space.Self);
+
+        // [수정] 회전 보정 로직 개선: CraneBody 차이 + CraneTower 차이 합산
+        float bodyAngleDiff = (craneBody != null) ? (initCraneBodyEulerAngles.z - craneBody.localEulerAngles.z) : 0f;
+        float towerAngleDiff = (initCraneTowerEulerAngles.y - craneTower.localEulerAngles.y); // 타워는 Y축 회전 기준
+
+        float totalAngleDiff = bodyAngleDiff + towerAngleDiff;
+
+        pointCloudTransform.transform.Rotate(0f, (useReverseRotator ? totalAngleDiff * float.Parse(CsCore.Configuration.ReadConfigIni("PointCloudRotateAmount", "Amount", "1")) : 0f) + pointCloudRotationOffset, 0f, Space.Self);
     }
+
     public void SetPosition(double latitude, double longitude, float azimuth, float highAngle)
     {
         SetCraneRotate(azimuth);

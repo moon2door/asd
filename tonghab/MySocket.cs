@@ -68,7 +68,7 @@ public class MySocket : MonoBehaviour
             hookPos3.Add(key, Vector3.zero);
         }
 
-        foreach(var obj in craneInfo.craneGameObject)
+        foreach (var obj in craneInfo.craneGameObject)
         {
             cranes.Add(obj.GetComponent<CraneParts>());
         }
@@ -85,14 +85,14 @@ public class MySocket : MonoBehaviour
                 if (processes.Length == 0)
                 {
                     var startInfo = new System.Diagnostics.ProcessStartInfo
-                        {
-                            FileName = ".\\" + processName + ".exe",
-                            #if UNITY_EDITOR
-                            WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized
-                            #else
+                    {
+                        FileName = ".\\" + processName + ".exe",
+#if UNITY_EDITOR
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Minimized
+#else
                             WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden // 최소화 상태로 시작
-                            #endif
-                        };
+#endif
+                    };
                     System.Diagnostics.Process.Start(startInfo);
                 }
                 else
@@ -298,11 +298,11 @@ public class MySocket : MonoBehaviour
                 int craneId = BitConverter.ToInt32(bufferHead, 8);
                 int key = craneInfo.GetCraneKeycode(pierId, craneId);
                 CraneParts crane = cranes.Find(e => e.pierCode == pierId && e.craneCode == craneId);
-                
+
                 bool bSocketPierType = false;
-                for(int i = 0; i < (int)PierUtility.PierType.MAX; i++)
+                for (int i = 0; i < (int)PierUtility.PierType.MAX; i++)
                 {
-                    if(pierId == i + 1)
+                    if (pierId == i + 1)
                     {
                         bSocketPierType = true;
                         break;
@@ -721,14 +721,14 @@ public class MySocket : MonoBehaviour
                             char lastHour = (char)buffer[i * (16) + 2];
                             char lastMin = (char)buffer[i * (16) + 3];
 
-                            if (0 <= startHour && startHour < 24) 
-                            daily[i].startHour = startHour;
-                            if (0 <= startMin && startMin < 60) 
-                            daily[i].startMin = startMin;
-                            if (0 <= lastHour && lastHour < 24) 
-                            daily[i].lastHour = lastHour;
-                            if (0 <= lastMin && lastMin < 60) 
-                            daily[i].lastMin = lastMin;
+                            if (0 <= startHour && startHour < 24)
+                                daily[i].startHour = startHour;
+                            if (0 <= startMin && startMin < 60)
+                                daily[i].startMin = startMin;
+                            if (0 <= lastHour && lastHour < 24)
+                                daily[i].lastHour = lastHour;
+                            if (0 <= lastMin && lastMin < 60)
+                                daily[i].lastMin = lastMin;
                         }
                         graphManager.UpdateOprtationHistory(new OperationHistory(pierId, craneId, year, daily));
 
@@ -896,7 +896,7 @@ public class MySocket : MonoBehaviour
     {
         int size = message.ToBytes(ref bufferSend);
         StopCoroutine(CheckLogDataReceive());
-        receiveLogData = false ; //pjh
+        receiveLogData = false; //pjh
         StartCoroutine(CheckLogDataReceive());//pjh
 
         NetworkStream stream = clientSocket.GetStream();
@@ -909,13 +909,13 @@ public class MySocket : MonoBehaviour
     bool receiveLogData;
     IEnumerator CheckLogDataReceive()
     {
-        int waitTime = 0 ;
-        while(waitTime++ < WaitForLogData && !receiveLogData)
+        int waitTime = 0;
+        while (waitTime++ < WaitForLogData && !receiveLogData)
         {
             yield return wait;
         }
 
-        if(waitTime > WaitForLogData)
+        if (waitTime > WaitForLogData)
         {
             menu.SetLoadingPanel(false);
             Debug.Log("Log Data Time out");
