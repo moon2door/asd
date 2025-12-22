@@ -107,14 +107,18 @@ public class CraneParts : MonoBehaviour
     }
     private void Start()
     {
-        if(useReverseRotateCrane) pointCloudTransform.transform.parent = craneTower.transform;
+        if (useReverseRotateCrane) pointCloudTransform.transform.parent = craneTower.transform;
         initCraneBodyEulerAngles = craneBody != null ? craneBody.transform.localEulerAngles : Vector3.zero;
 
         // [추가] 타워 초기 회전값 저장
         initCraneTowerEulerAngles = craneTower.localEulerAngles;
 
         defaultPointCloudRotation = pointCloudTransform.transform.localEulerAngles;
-        if(refPosition==null)return;
+
+        // [수정] CsConfig.ini 파일의 오프셋 값을 읽어오도록 호출 추가
+        ReadConfigOffset();
+
+        if (refPosition == null) return;
         startUnity = ReferenceGPSToUnity(refPosition.startPoint);
         endUnity = ReferenceGPSToUnity(refPosition.endPoint);
         // 시작과 끝 GPS 좌표의 거리 계산

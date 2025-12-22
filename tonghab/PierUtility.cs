@@ -44,7 +44,7 @@ public class PierUtility
             if (PierStr[i] == pier)
                 return (PierType)i;
         }
-        return PierType.Pier_J;
+        return PierType.Pier_7;
     }
     public static PierType Num2Pier(int pier)
     {
